@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Bottleneck Bichromatic Plane Matching of Points</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+  <link rel="stylesheet" href="front.css" type="text/css" />
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="app.js"></script>
+
+</head>
+<body>
+  
+<nav class="navbar navbar-inverse navbar-fixed-top">
+  <div class="container-fluid">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="#"><span class="glyphicon glyphicon-education" aria-hidden="true"></span></a>
+    </div>
+
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <ul class="nav navbar-nav">
+        <li class="active"><a href="#">Home<span class="sr-only">(current)</span></a></li>
+        <li><a href="#" id="intro">Introduction</a></li>
+        <li><a href="#" id="convex">Points in Convex Position</a></li>
+        <li><a href="#" id="circle">Points on Circle</a></li>
+        <li><a href="#" id="concl">Conclusion</a></li>
+        <li><a href="#" id="ref">References</a></li>
+      </ul>
+      
+      
+    </div><!-- /.navbar-collapse -->
+  </div><!-- /.container-fluid -->
+</nav>
+  <div class="container" style="background-color:black;">
+    <h1 style="color:rgb(100, 132, 255);">Bottleneck Bichromatic Plane Matching of Points</h1>
+    </br>
+    <p style="color:rgb(255, 222, 170);">Here is described solutions for <em>bottleneck bichromatic matching</em> (BBM) problem for some particular cases, mentioned in [1] article.</p>
+  </div>
+  <div class="container" id="content">
+  <div class="row" style="background-color:white;">
+    <div class="col-sm-12">
+      <h4 id="intro1">Introduction</h4>
+      <p class="text-justify">There is given a set of points on the plane. The points distinguish by their red and blue colors that are equal in amount. The problem is to connect those points by straight line segments such that each segment has red and blue endpoints and there are no any two segments which cross each other. Furthermore, from all longest segments of all matchings the smallest one is chosen.
+        </br></br>
+        &nbsp;&nbsp;&nbsp;The bottleneck bichromatic matching (BBM) problem is NP-hard. However in [1] authors provided special solutions for special cases. They considered several cases: <strong>points in convex position</strong> (i.e. points are placed on their convex hull [2]), <strong>points on circle</strong> and <strong>blue points on straight line</strong>. The case where points are in convex position is the most interesting one. Thus this project is focused on the case where points are in convex position. In this case by using a powerful observation [3] authors have given a dynamic programing solution.
+        </br></br>
+        This page contains modest clarification related to optimal substructure of the problem mentioned in [1].
+        </br></br>
+      </p>
+    </div>
+    <div class="col-sm-12" style="margin-left:-45px;">
+      <blockquote style="background-color:black;" class="text-right">
+        <p style="color:rgb(100, 132, 255);">Employ your time in improving yourself by other men's writings so that you shall come easily by what others have labored hard for.</p> 
+        <footer style="color:rgb(255, 222, 170);">Socrates</footer>
+      </blockquote>
+    </div>
+  </div>
+  <div class="row" style="background-color:white;">  
+    <div class="col-sm-12">
+      </br>
+      <p class="text-justify">In [1] the following notations are provided.</p>
+      <p class="text-justify" style="margin-left:10px;">Let <var>R = {r<sub>1</sub>, r<sub>2</sub>, …, r<sub>n</sub>}</var> be the set of <var>n</var> red points, and <var>B = {b<sub>1</sub>, b<sub>2</sub>, …, b<sub>n</sub>}</var> be the set of <var>n</var> blue points in the plane. A RB-<em>matching</em> is a non-crossing perfect matching of the points by straight line segments in such a way that each segment has one endpoint in B and one in R. The <em>bottleneck</em> is the length of the longest edge in RB-matching and the BBM problem is to find the minimum bottleneck from all possible RB-matchings.</p>
+      <p class="text-justify">The BBM has many applications such as in pattern recognition, image processing, statistical analysis and in other fields. </p>
+      </br>
+      <h4 id="convex1">Points in Convex Position</h4>
+      <p class="text-justify">
+        In [1] a <var>O(n<sup>3</sup>)</var>-time algorithm for points on convex position is presented. By <var>P</var> is denoted the union of <var>R</var> and <var>B</var> sets, <var>P = {r<sub>1</sub>, r<sub>2</sub>, …, r<sub>n</sub>,b<sub>1</sub>, b<sub>2</sub>, …, b<sub>n</sub>}</var>. There is also an observation (Observation 1 in [1]) provided which says the following:
+        </br> 
+        &nbsp;&nbsp;&nbsp;<em><mark>If <var>(r<sub>i</sub>, b<sub>i</sub>)</var> is an edge in any RB-matching of <var>P</var>, then there are equal amount of red and blue points placed between <var>r<sub>i</sub></var> and <var>b<sub>i</sub></var>.</mark></em>
+        </br></br>
+        And then the authors come up with the definition of <em>feasible edge</em>:
+        </br>
+        &nbsp;&nbsp;&nbsp;<em><mark><var>(p<sub>i</sub>, p<sub>j</sub>)</var> belonging to <var>P</var> is called feasible edge if <var>p<sub>i</sub></var> and <var>p<sub>j</sub></var> have different colors and the sequence <var>p<sub>i + 1</sub>,...,p<sub>j - 1</sub></var> contains the same number of red and blue points.</mark></em>
+        </br></br>
+        Observing this, <var>F<sub>i</sub></var> is denoted the set of feasible matches of <var>p<sub>i</sub></var>
+        </br></br>
+      </p>
+    </div>
+    
+    <div class="col-sm-12">
+      <p class="text-justify">Below is provided a canvas for drawing red and blue points in counter clockwise order in convex position. 
+        <mark style="background-color:rgb(237, 236, 218);">Note that the amount of red and blue points should be equal. To complete the drawing of the convex hull you should click on the first vertex.</mark> After that there will be shown a table which will show all feasible matchings of each vertex.
+      </p>       
+    </div>
+    
+    <div class="col-sm-12">
+        <button id="restoreConvex" class="buttonStyle">Restore</button>
+        <form role="form" id="cForm">
+          <label class="radio-inline"><input type="radio" value="blue" name="color" checked="true"><strong>Blue point</strong></label>
+          <label class="radio-inline"><input type="radio" value="red" name="color"><strong>Red point</strong></label>
+        </from>
+    </div>
+    
+    <div class="col-sm-6" style="margin-top:5px;">
+      <div id="convexPos" style="height:400px;">
+      <svg xmlns:svg="http://www.w3.org/2000/svg" xmlns="http://www.w3.org/2000/svg" style="width:100%; height:100%">
+		
+	    </svg>
+	    </div>
+    </div>
+    
+    <div class="col-sm-6" style="margin-top:5px;">
+      <div id="tFeasible">
+      	<table>
+      	</table>	
+      </div>
+    </div>
+    
+    
+  </div>
+  
+  <div class="row" style="background-color:white;">
+    <div class="col-sm-12" style="margin-top:5px;">
+      <p class="text-primary" class="text-justify">Note that the page is interactive and for continuous proper working you need to draw the convex hull</p>
+      <p class="text-justify">Each cell of the table above shows the weights of the edges in the case if they are feasible edges, otherwise it shows infinite. It is based on the following formula that was mentioned in [1]</p>
+      <img style="width:50%; margin-left:25%;" src="formula1.PNG"></img>
+      <p class="text-center"></p>
+      
+      <p>From the table it can be seen that the vertex <var id="target1">p<sub>0</sub></var> has the following set of feasible matches: <var id="feasible1"></var>. For vertex <var id="target2">p<sub>1</sub></var>, <var id="feasible2"></var></p>        
+      <p class=text-justify>Now it's time to look through the actual algorithm. Authors of [1] have provided the following notations for dynamic programming solution:</p>
+      <p class="text-justify" style="margin-left:10px;"><mark><var>P<sub>i,j</sub> = {p<sub>i</sub>,...,p<sub>j</sub>}</var> is any subsequence of <var>P</var>, where <var>1 ≤ i < j ≤ 2n</var>. <var>A[i,j]</var> denotes the bottleneck of the optimal matching in <var>P<sub>i,j</sub></var> if <var>P<sub>i,j</sub></var> has an RB-matching, otherwise, <var>A[i, j] = +&#8734;</var>.</mark> <var>A[i, j]</var> is the optimal substructure and the <var>A[1, 2n]</var> will be the optimal solution for <var>P</var> by using dynamic programming. Thus the algorithm gives a table which fills in bottom up fashion. The reccurence relation is the following:</p>
+      <img style="width:50%; margin-left:25%;" src="formula2.PNG"></img>
+      <p class="text-justify">where <var>A[i+1,k-1]</var> and <var>A[k+1,j]</var>  are the left and right sub-problems of the edge <var>(p<sub>i</sub>, p<sub>k</sub>)</var>. To compute <var>A[i,j]</var> it minimizes all the k sub-problems where for each k it takes the maximum from two sub-problems and the weight of the fiseable <var>(p<sub>i</sub>, p<sub>k</sub>)</var> edge. In general there are <var>n<sup>2</sup></var> sub-problems and <var>k = j - i</var> lookups in each sub-problem. Thus the total running time will be <var>O(n<sup>3</sup>)</var>.There is an important point to notice while filling up the table, which is done by using the formula mentioned above.The important point here is that while filling the table there can be cases where <var>i > j</var>, for example if we take <var>k = i + 1</var>, then we will get <var>A[i + 1][i]</var> (Note that the same story can happen with <var>A</var>[k + 1, j]). We can neglect that cases by taking <var>k</var>-s strictly greater than <var>i + 1</var>, however in that case we we will lose the second part which is <var>A</var>[k + 1,j]. So that kind of <var>A</var>-s are like undefined because we are not interested in such <var>A</var>-s where <var>i > j</var>. So without loss of generality we assign <var>A</var>[i,j] = 0, when <var>i > j</var>, because taking maximum value from three numbers is the same as to take the two not undefined or to take three numbers, but before that to assign undefined A to zero. On the other hand if <var>i = j</var>, then <var>A</var>[i, j] = +&#8734;, because it means that there is only one point, but it can not have RB-matching to itself because in the self-edge colors of vertices will be the same, which is not feasible, that is why <var>A</var>[i, j] should be infinite.
+      </br></br>
+      Below is the table illustrating A[i,j]</p>
+      <p class="text-primary">Note that the table below is created by you while drawing points in convex positions</p>
+    </div>
+  </div>
+  <div class="row" style="background-color:white;">
+    <div class="col-sm-12" id="tFirstAlg">
+    	<table>
+    	</table>	
+    <p class="text-justify">From this last table it is seen that the A[1, 2n] is the <var>A</var>[0, <span class="optSol"></span>], which shows whether points have RB-matching or not. If there is RB-matching, then the <var>A</var>[0, <span class="optSol"></span>] shows the maximum weight of an edge in RB-matching (i.e. the bottleneck). Thus by using the previous table (first table) we can check which edge has the same value as <var>A</var>[0, <span class="optSol"></span>] has and take that edge. To take edges for the rest of vertices we should take such edges where weights are less than or equal to <var>A</var>[0, <span class="optSol"></span>].</p>
+    </div>
+  </div>
+  <div class="row" style="background-color:white;">
+    <div class="col-sm-12">
+      <h4 id="circle1">Points on Circle</h4>
+      <p class="text-justify">In [1] a solution is given for BBM problem where points are on circle. There is mentioned a lemma which says the following:</p>
+      <p class="text-justify" style="margin-left:10px;"><mark>There is an optimal RB-matching for a point set <var>P</var> on a circle, such that each <var>p<sub>i</sub>∈ P</var>  is connected to its first feasible match in the clockwise or counter clockwise order from <var>p<sub>i</sub></var></mark></p>
+      <p class="text-justify">Assume that in the first table for feasible edges the points are placed on circle, then the first feasible match is the first cell from the top or from the bottom. Thus for each <var>i, j</var> we have two lookups instead of <var>k</var>. Authors in [1] use the above mentioned algorithm to compute BBM problem where the points are arranged on the boundary of the circle and get the <var>O(n<sup>2</sup>)</var> running time.</p>
+      <p class="text-justify">&nbsp;&nbsp;&nbsp;However, they have also provided a better algorithm whose running time is <var>O(n log n)</var>.Before the actual algorithm the feasible mathces for each edge are computed. To compute feasible matches for each vertex they have developed the following algorthm: It is assumed that the red and blue points are placed on circle in clockwise order. <var>F<sub>i</sub></var> denotes the first feasible matches. Note that <var>F<sub>i</sub></var> has at most two elements. The <var>P<sup>'</sup></var> is a copy of <var>P</var>. The algorithms first strats from any red vertex and travels to all vertices in clockwise direction. If it finds a red point the algorithm pushes it onto the stack, otherwise if it is blue point and if stack is not empty it popes the stack and removes the popped point and the blue point from the <var>P<sup>'</sup></var> otherwise if stack is empty it does nothing. After first travel (when it has already visited all vertices) if the stack is not empty it starts the same procedure in counter clockwise direction. Thus the algorithm visits each vertex at most twice, therefore the runing time is linear <var>O(n)</var>. This procedure is very similar to the case in regular expression where the automata should read equal amount of two types of symbols (e.g. the number of a-s should be equal to the number of b-s. For more information see [4]). </p>
+      
+    </div>
+    
+    <div class="col-sm-12">
+      <h4 id="conc1">Conclusion</h4>
+      <p class="text-justify">Here we have discussed the idea of feasible edges which helped to find RB-matching of points in convex position or on baundary of circle. We covered the optimal substructure in the case of convex position, by considering all cases and giving exact explinations. The algorithm for points in convex position can also be used for finding RB-matching for points on boundary of circle. There was mentioned a faster algorithm for points on circle (O(n log n)), where the first step for finding feasible edges was made.</p>
+    </div>
+    
+    <div class="col-sm-12">
+      <h4 id="ref1">References</h4>
+      <p class="text-justify" style="font-size">
+        [1] Ahmad Biniaz, Anil Maheshwari, Michiel Smid. Bottleneck Bichromatic Plane Matching of Points. 2014.</br>
+        [2] T. H. Cormen, C. E. Leiserson, R. L. Rivest, C. Stein. Introduction to Algorithms. <em>Convexx Hull</em> page 947. <em>Dynamic Programming</em> page 339. 2nd edition 2001.</br>
+        [3] Ahmad Biniaz, Anil Maheshwari, Michiel Smid. Bottleneck Bichromatic Plane Matching of Points. Page 1, 2014.</br>
+        [4] Raymond Zavodnik. Introduction to Computer Science. Pages 52-66, 97-101. 2014.</br>
+      </p>
+    </div>
+    
+  </div>
+  </br>
+  Powered by Karlen Manaseryan 2015 &copy;
+  </br>
+  </br>
+</div>
+
+</body>
+</html>
+
